@@ -2,5 +2,7 @@
   "name": "realtime-chat",
   "version": "0.0.1",
   "description": "A realtime chat application to try socket.io",
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.16.3"
+  }
 }
