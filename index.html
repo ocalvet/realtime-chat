@@ -20,7 +20,26 @@
     </form>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      var socket = io();
+      (function() {
+        console.log('Document loaded');
+        var socket = io();
+        var form = document.querySelector('form');
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          var messageInput = document.querySelector('#m');
+          var msg = messageInput.value;
+          socket.emit('chat message', msg);
+          console.log('Sending message', msg);
+          return false;
+        });
+        socket.on('chat message', function(msg){
+          console.log('message received', msg);
+          var messagesContainer = document.querySelector('#messages');
+          var newMessage = document.createElement("li");
+          newMessage.innerHTML = msg;
+          messagesContainer.appendChild(newMessage);
+        });
+      })();
     </script>
   </body>
 </html>
