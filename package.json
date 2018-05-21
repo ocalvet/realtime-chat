@@ -2,8 +2,15 @@
   "name": "realtime-chat",
   "version": "0.0.1",
   "description": "A realtime chat application to try socket.io",
+  "scripts": {
+    "build": "webpack --config webpack.config.js"
+  },
   "dependencies": {
     "express": "^4.16.3",
     "socket.io": "^2.1.1"
+  },
+  "devDependencies": {
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.3"
   }
 }
