@@ -18,36 +18,6 @@
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-      function addMessage(msg) {
-        var messagesContainer = document.querySelector('#messages');
-        var newMessage = document.createElement("li");
-        newMessage.innerHTML = msg;
-        messagesContainer.appendChild(newMessage);
-      }
-      (function() {
-        console.log('Document loaded');
-        var socket = io();
-        var form = document.querySelector('form');
-        form.addEventListener('submit', function(e) {
-          e.preventDefault();
-          var messageInput = document.querySelector('#m');
-          var msg = messageInput.value;
-          socket.emit('chat message', msg);
-          console.log('Sending message', msg);
-          addMessage(msg);
-          return false;
-        });
-        socket.on('chat message', function(msg){
-          console.log('message received', msg);
-          addMessage(msg);
-        });
-        socket.on('user connected', function(data) {
-          console.log('user connected');
-        })
-      })();
-    </script>
     <script src="bundle.js"></script>
   </body>
 </html>
