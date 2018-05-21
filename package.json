@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "A realtime chat application to try socket.io",
   "scripts": {
-    "build": "webpack --config webpack.config.js"
+    "prestart": "npm run build",
+    "start": "node server/index.js",
+    "build": "webpack --config webpack.config.js && cp ./client/index.html ./dist/index.html"
   },
   "dependencies": {
     "express": "^4.16.3",

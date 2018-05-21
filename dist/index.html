@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Realtime Chat Application</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    </style>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      function addMessage(msg) {
+        var messagesContainer = document.querySelector('#messages');
+        var newMessage = document.createElement("li");
+        newMessage.innerHTML = msg;
+        messagesContainer.appendChild(newMessage);
+      }
+      (function() {
+        console.log('Document loaded');
+        var socket = io();
+        var form = document.querySelector('form');
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          var messageInput = document.querySelector('#m');
+          var msg = messageInput.value;
+          socket.emit('chat message', msg);
+          console.log('Sending message', msg);
+          addMessage(msg);
+          return false;
+        });
+        socket.on('chat message', function(msg){
+          console.log('message received', msg);
+          addMessage(msg);
+        });
+        socket.on('user connected', function(data) {
+          console.log('user connected');
+        })
+      })();
+    </script>
+    <script src="bundle.js"></script>
+  </body>
+</html>
