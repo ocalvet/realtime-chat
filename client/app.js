@@ -3,6 +3,7 @@ import ioClient from 'socket.io-client'
 class App {
   constructor() {
     console.log('App created');
+    this.nickname = prompt('What is your nickname?');
     this.io = ioClient('http://localhost:3000');
     this.wireEvents();
   }
