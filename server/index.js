@@ -10,7 +10,6 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-  console.log('a user connected');
   socket.on('disconnect', function(e){
     console.log('user disconnected', e);
   });
@@ -18,7 +17,10 @@ io.on('connection', function(socket){
     console.log('message: ' + msg);
     socket.broadcast.emit('chat message', msg);
   });
-  io.emit('user connected');
+  socket.on('user conencted', function(msg){
+    console.log('user connected:', msg);
+    socket.broadcast.emit('user connected', msg);
+  });
 });
 
 http.listen(3000, function(){

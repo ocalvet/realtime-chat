@@ -12,8 +12,9 @@ class App {
       this.addMessage(msg);
     });
     this.io.on('user connected', (data) => {
-      this.addMessage('User connected');
+      this.addMessage(`Hi ${data}`);
     })
+    this.io.emit('user connected', this.nickname);
   }
   init() {
     console.log('App initializing');
