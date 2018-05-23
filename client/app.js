@@ -13,8 +13,14 @@ class App {
     });
     this.io.on('user connected', (data) => {
       this.addMessage(`Hi ${data}`);
-    })
-    this.io.emit('user connected', this.nickname);
+    });
+    this.io.on('connect', () => {
+      console.log(`ID: ${this.io.id} - Nickname: ${this.nickname}`); // 'G5p5...'
+      this.io.emit('user connected', this.nickname);
+    });
+    this.io.on('disconnect', (e) => {
+      console.log('disconnected', e);
+    });
   }
   init() {
     console.log('App initializing');
