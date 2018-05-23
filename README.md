@@ -11,3 +11,7 @@ $ npm start
 ```
 $ npm run build
 ```
+
+## Dependencies
+- Nodejs
+- webpack
