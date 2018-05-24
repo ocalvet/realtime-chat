@@ -17,6 +17,7 @@ class App {
     });
     this.io.on('connect', () => {
       console.log(`ID: ${this.io.id} - Nickname: ${this.nickname}`); // 'G5p5...'
+      console.log('io', this);
       this.io.emit('user connected', this.nickname);
     });
     this.io.on('disconnect', (e) => {
