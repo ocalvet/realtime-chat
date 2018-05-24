@@ -8,6 +8,7 @@ class App {
     this.wireEvents();
   }
   wireEvents() {
+    console.log('wiring events');
     this.io.on('chat message', (msg) => {
       this.addMessage(msg);
     });
