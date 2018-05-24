@@ -13,11 +13,11 @@ class App {
       console.log(`ID: ${this.io.id} - Nickname: ${this.nickname}`); // 'G5p5...'
     });
     this.io.emit('user connected', this.nickname);
-    this.io.on('chat message', (msg) => {
-      this.addMessage(msg);
+    this.io.on('chat message', (data) => {
+      this.addMessage(`${data.nickname}: ${data.msg}`);
     });
     this.io.on('user connected', (data) => {
-      this.addMessage(`Hi ${data}`);
+      this.addMessage(`${data} connected`);
     });
     this.io.on('disconnect', (e) => {
       console.log('disconnected', e);
@@ -27,11 +27,15 @@ class App {
     console.log('App initializing');
     const form = document.querySelector('form');
     form.addEventListener('submit', (e) => {
+      console.log('submitting msg', this, e);
       e.preventDefault();
       const messageInput = document.querySelector('#m');
       const msg = messageInput.value;
-      this.io.emit('chat message', msg);
-      this.addMessage(msg);
+      this.io.emit('chat message', {
+        nickname: this.nickname,
+        msg
+      });
+      this.addMessage(`Me: ${msg}`);
       return false;
     });
   }
