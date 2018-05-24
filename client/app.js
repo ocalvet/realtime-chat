@@ -9,16 +9,15 @@ class App {
   }
   wireEvents() {
     console.log('wiring events');
+    this.io.on('connect', (client) => {
+      console.log(`ID: ${this.io.id} - Nickname: ${this.nickname}`); // 'G5p5...'
+    });
+    this.io.emit('user connected', this.nickname);
     this.io.on('chat message', (msg) => {
       this.addMessage(msg);
     });
     this.io.on('user connected', (data) => {
       this.addMessage(`Hi ${data}`);
-    });
-    this.io.on('connect', () => {
-      console.log(`ID: ${this.io.id} - Nickname: ${this.nickname}`); // 'G5p5...'
-      console.log('io', this);
-      this.io.emit('user connected', this.nickname);
     });
     this.io.on('disconnect', (e) => {
       console.log('disconnected', e);
