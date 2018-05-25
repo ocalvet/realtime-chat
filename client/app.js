@@ -23,12 +23,23 @@ class App {
       this.addMessage(`${data.msg}`, this.users[data.nickname])
     })
     this.io.on('user connected', (data) => {
-      console.log('adding user', data);
-      this.users[data] = {
-        nickname: data,
-        cssClass: 'rand-msg'
+      console.log('adding user', data)
+      if (!(data.nickname in this.users)) {
+        this.users[data.newUser] = {
+          nickname: data.newUser,
+          cssClass: 'rand-msg'
+        }
       }
-      this.addMessage(`connected`, this.users[data])
+      data.allUsers.forEach(u => {
+        if (!(u in this.users)) {
+          this.users[u] = {
+            nickname: u,
+            cssClass: 'rand-msg'
+          }
+        }
+      })
+
+      this.addMessage(`connected`, this.users[data.newUser])
     })
     this.io.on('disconnect', (e) => {
       console.log('disconnected', e)

@@ -8,7 +8,7 @@ app.use(express.static('dist'))
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '../dist/index.html')
 })
-
+const users = []
 io.on('connection', function (socket) {
   socket.on('disconnect', function (e) {
     console.log('user disconnected', JSON.stringify(e))
@@ -19,7 +19,11 @@ io.on('connection', function (socket) {
   })
   socket.on('user connected', function (data) {
     console.log('user connected:', JSON.stringify(data))
-    socket.broadcast.emit('user connected', data)
+    users.push(data)
+    socket.broadcast.emit('user connected', {
+      newUser: data,
+      allUsers: users
+    })
   })
 })
 
