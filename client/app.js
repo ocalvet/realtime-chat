@@ -6,6 +6,11 @@ class App {
     this.nickname = prompt('What is your nickname?')
     this.io = ioClient('http://localhost:3000')
     this.wireEvents()
+    this.users = {}
+    this.users[this.nickname] = {
+      cssClass: 'my-msg',
+      nickname: this.nickname
+    }
   }
   wireEvents () {
     console.log('wiring events')
@@ -14,10 +19,16 @@ class App {
     })
     this.io.emit('user connected', this.nickname)
     this.io.on('chat message', (data) => {
-      this.addMessage(`${data.nickname}: ${data.msg}`)
+      console.log('receiving message', this.users, data)
+      this.addMessage(`${data.msg}`, this.users[data.nickname])
     })
     this.io.on('user connected', (data) => {
-      this.addMessage(`${data} connected`)
+      console.log('adding user', data);
+      this.users[data] = {
+        nickname: data,
+        cssClass: 'rand-msg'
+      }
+      this.addMessage(`connected`, this.users[data])
     })
     this.io.on('disconnect', (e) => {
       console.log('disconnected', e)
@@ -35,14 +46,15 @@ class App {
         nickname: this.nickname,
         msg
       })
-      this.addMessage(`Me: ${msg}`)
+      this.addMessage(`${msg}`, this.users[this.nickname])
       return false
     })
   }
-  addMessage (msg) {
+  addMessage (msg, user) {
     const messagesContainer = document.querySelector('#messages')
     const newMessage = document.createElement('li')
-    newMessage.innerHTML = msg
+    newMessage.className = user.cssClass
+    newMessage.innerHTML = `${user.nickname} - ${msg}`
     messagesContainer.appendChild(newMessage)
   }
 }
