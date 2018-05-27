@@ -5,12 +5,12 @@ class App {
     console.log('App created')
     this.nickname = prompt('What is your nickname?')
     this.io = ioClient('http://localhost:3000')
-    this.wireEvents()
     this.users = {}
     this.users[this.nickname] = {
       cssClass: 'my-msg',
       nickname: this.nickname
     }
+    this.wireEvents()
   }
   wireEvents () {
     console.log('wiring events')

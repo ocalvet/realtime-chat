@@ -4,14 +4,15 @@
   "description": "A realtime chat application to try socket.io",
   "scripts": {
     "prestart": "npm run build",
-    "start": "node server/index.js",
-    "build": "webpack --config webpack.config.js && cp ./client/index.html ./dist/index.html"
+    "start": "node dist/server/index.js",
+    "build": "webpack --config webpack.config.js && cp ./client/index.html ./dist/client/index.html"
   },
   "dependencies": {
     "express": "^4.16.3",
     "socket.io": "^2.1.1"
   },
   "devDependencies": {
+    "babel-loader": "^7.1.4",
     "webpack": "^4.8.3",
     "webpack-cli": "^2.1.3"
   }
